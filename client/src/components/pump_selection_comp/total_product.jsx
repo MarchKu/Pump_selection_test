@@ -25,8 +25,8 @@ export default function Total_product() {
           Total match
         </Typography>
         <Gauge
-          value={matchModelsCount}
-          valueMax={totalModels && `${totalModels}`}
+          value={matchModelsCount ? Number(matchModelsCount) : 0}
+          valueMax={totalModels ? Number(totalModels) : 0}
           startAngle={-110}
           endAngle={110}
           width={200}

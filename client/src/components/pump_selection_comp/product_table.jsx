@@ -62,12 +62,7 @@ export default function Product_table() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((model, index) => {
                   return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={model.model_name}
-                    >
+                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       <TableCell
                         sx={{
                           display: "flex",
@@ -107,7 +102,7 @@ export default function Product_table() {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25, 100]}
         component="div"
-        count={matchModels && matchModels.length}
+        count={matchModels ? matchModels.length : 1}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

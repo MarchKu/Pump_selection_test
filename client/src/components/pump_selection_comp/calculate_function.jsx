@@ -19,13 +19,32 @@ export const Calculate_function = () => {
     f_unit2: "L/s",
     h_unit1: "m",
   };
+
+  !localStorage.getItem("input_for_cal") &&
+    localStorage.setItem(
+      "input_for_cal",
+      JSON.stringify({
+        input_flow: 0,
+        input_head: 0,
+        unit_flow: units.default,
+        unit_head: units.default,
+      })
+    );
+
   const [anchorElF, setAnchorElF] = React.useState(null);
   const [anchorElH, setAnchorElH] = React.useState(null);
-  const [unitF, setUnitF] = React.useState(units.default);
-  const [unitH, setUnitH] = React.useState(units.default);
-  const [formData, setFormData] = React.useState(null);
-  const [flowData, setFlowData] = React.useState(0);
-  const [headData, setHeadData] = React.useState(0);
+  const [unitF, setUnitF] = React.useState(
+    JSON.parse(localStorage.getItem("input_for_cal")).unit_flow
+  );
+  const [unitH, setUnitH] = React.useState(
+    JSON.parse(localStorage.getItem("input_for_cal")).unit_head
+  );
+  const [flowData, setFlowData] = React.useState(
+    JSON.parse(localStorage.getItem("input_for_cal")).input_flow
+  );
+  const [headData, setHeadData] = React.useState(
+    JSON.parse(localStorage.getItem("input_for_cal")).input_head
+  );
 
   const openF = Boolean(anchorElF);
 
@@ -49,10 +68,15 @@ export const Calculate_function = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (unitF === "m3/h") {
-      /* console.log({
-        flow_m3hr: flowData,
-        head: headData,
-      }); */
+      localStorage.setItem(
+        "input_for_cal",
+        JSON.stringify({
+          input_flow: flowData,
+          input_head: headData,
+          unit_flow: unitF,
+          unit_head: unitH,
+        })
+      );
       setUserInput({
         flow_m3hr: flowData,
         head: headData,
@@ -62,12 +86,17 @@ export const Calculate_function = () => {
         head: headData,
       });
     } else if (unitF === "L/s") {
-      /* console.log({
-        flow_ls: flowData,
-        head: headData,
-      }); */
+      localStorage.setItem(
+        "input_for_cal",
+        JSON.stringify({
+          input_flow: flowData,
+          input_head: headData,
+          unit_flow: unitF,
+          unit_head: unitH,
+        })
+      );
       setUserInput({
-        flow_m3hr: flowData,
+        flow_ls: flowData,
         head: headData,
       });
       getInRangeModel({
@@ -75,6 +104,23 @@ export const Calculate_function = () => {
         head: headData,
       });
     }
+  };
+
+  const handleClear = () => {
+    localStorage.setItem(
+      "input_for_cal",
+      JSON.stringify({
+        input_flow: 0,
+        input_head: 0,
+        unit_flow: units.default,
+        unit_head: units.default,
+      })
+    );
+
+    setUnitF(JSON.parse(localStorage.getItem("input_for_cal")).unit_flow);
+    setUnitH(JSON.parse(localStorage.getItem("input_for_cal")).unit_head);
+    setFlowData(JSON.parse(localStorage.getItem("input_for_cal")).input_flow);
+    setHeadData(JSON.parse(localStorage.getItem("input_for_cal")).input_head);
   };
 
   return (
@@ -229,6 +275,9 @@ export const Calculate_function = () => {
       <CardActions sx={{ paddingX: 3, paddingBottom: 3 }}>
         <Button size="small" variant="contained" onClick={handleSubmit}>
           Calculate
+        </Button>
+        <Button size="small" variant="contained" onClick={handleClear}>
+          Clear
         </Button>
       </CardActions>
     </Card>
