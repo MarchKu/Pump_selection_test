@@ -212,7 +212,7 @@ app.post("/npshr_data", async (req, res) => {
         order by abs(CAST(np_flow_ls AS DECIMAL)-$2) asc
         LIMIT 1
         `,
-      [input.model_id, input.flow2]
+      [input.model_id, input.flow1]
     );
 
     const upper = await connectionPool.query(
