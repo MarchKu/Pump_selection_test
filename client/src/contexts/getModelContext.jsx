@@ -130,6 +130,7 @@ function GetModelsProvider(props) {
         "http://localhost:4000/power_data",
         props
       );
+      console.log(response.data);
       const refData = {};
       refData[response.data[0].p_power] = props.flow_m3hr
         ? response.data[0].p_flow_m3hr
@@ -149,6 +150,7 @@ function GetModelsProvider(props) {
           }
         }
         setPowerGraphData(refData);
+        console.log(refData);
       }
     } catch (error) {
       console.error(error);

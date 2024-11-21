@@ -78,6 +78,7 @@ export default function EfficiencyResult() {
   }
 
   if (powerGraphData) {
+    console.log(powerGraphData);
     const pow1 =
       Object.keys(powerGraphData)[0] < Object.keys(powerGraphData)[1]
         ? Number(Object.keys(powerGraphData)[0])

@@ -19,55 +19,6 @@ export default function ShowUserInput() {
     f_unit2: "L/s",
     h_unit1: "m",
   };
-  const [anchorElF, setAnchorElF] = React.useState(null);
-  const [anchorElH, setAnchorElH] = React.useState(null);
-  const [unitF, setUnitF] = React.useState(units.default);
-  const [unitH, setUnitH] = React.useState(units.default);
-  const [formData, setFormData] = React.useState(null);
-  const [flowData, setFlowData] = React.useState(0);
-  const [headData, setHeadData] = React.useState(0);
-
-  const openF = Boolean(anchorElF);
-
-  const openH = Boolean(anchorElH);
-
-  const handleClickF = (event) => {
-    setAnchorElF(event.currentTarget);
-  };
-  const handleClickH = (event) => {
-    setAnchorElH(event.currentTarget);
-  };
-  const handleCloseF = (inputUnit) => {
-    setAnchorElF(null);
-    inputUnit !== null && inputUnit !== unitF && setUnitF(inputUnit);
-  };
-  const handleCloseH = (inputUnit) => {
-    setAnchorElH(null);
-    inputUnit !== null && inputUnit !== unitH && setUnitH(inputUnit);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (unitF === "m3/h") {
-      /* console.log({
-        flow_m3hr: flowData,
-        head: headData,
-      }); */
-      getInRangeModel({
-        flow_m3hr: flowData,
-        head: headData,
-      });
-    } else if (unitF === "L/s") {
-      /* console.log({
-        flow_ls: flowData,
-        head: headData,
-      }); */
-      getInRangeModel({
-        flow_ls: flowData,
-        head: headData,
-      });
-    }
-  };
 
   return (
     <Card
@@ -168,7 +119,13 @@ export default function ShowUserInput() {
       </CardContent>
 
       <CardActions sx={{ paddingX: 3, paddingBottom: 3 }}>
-        <Button size="small" variant="contained" onClick={handleSubmit}>
+        <Button
+          size="small"
+          variant="contained"
+          onClick={() => {
+            history.back();
+          }}
+        >
           Back
         </Button>
       </CardActions>

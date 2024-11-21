@@ -33,7 +33,9 @@ const More_info = () => {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Typography sx={{ marginBottom: 2, marginBottom: 1 }} variant="h4">
-          Model : {model && model.model_name + "/" + model.model_size}
+          Model :{" "}
+          {model &&
+            model.model_name + " / " + model.model_size + ` / ${model.rpm} rpm`}
         </Typography>
         <Box
           component="main"

@@ -56,7 +56,7 @@ app.post("/curve_data", async (req, res) => {
         from curve_graph_data
         where model_id = $1
         order by abs(c_head - $2) asc
-        LIMIT 10
+        LIMIT 20
         `,
       [input.model_id, input.head]
     );
@@ -68,7 +68,7 @@ app.post("/curve_data", async (req, res) => {
         from curve_graph_data
         where model_id = $1
         order by abs(c_head - $2) asc
-        LIMIT 10
+        LIMIT 20
         `,
       [input.model_id, input.head]
     );
@@ -96,7 +96,7 @@ app.post("/efficiency_data", async (req, res) => {
         from efficiency_graph_data
         where model_id = $1
         order by abs(CAST(e_flow_m3hr AS DECIMAL)-$2) + abs( CAST(e_head AS DECIMAL) - $3) asc
-        LIMIT 5
+        LIMIT 20
         `,
       [input.model_id, input.flow2, input.head2]
     );
@@ -119,7 +119,7 @@ app.post("/efficiency_data", async (req, res) => {
         from efficiency_graph_data
         where model_id = $1
         order by abs(CAST(e_flow_ls AS DECIMAL)-$2) + abs( CAST(e_head AS DECIMAL) - $3) asc
-        LIMIT 10
+        LIMIT 20
         `,
       [input.model_id, input.flow2, input.head2]
     );
@@ -147,7 +147,7 @@ app.post("/power_data", async (req, res) => {
         from power_graph_data
         where model_id = $1
         order by abs(CAST(p_flow_m3hr AS DECIMAL)-$2) asc
-        LIMIT 10
+        LIMIT 20
         `,
       [input.model_id, input.flow2]
     );
@@ -161,18 +161,18 @@ app.post("/power_data", async (req, res) => {
         order by abs(CAST(p_flow_ls AS DECIMAL)-$2) asc
         LIMIT 1
         `,
-      [input.model_id, input.flow2]
+      [input.model_id, input.flow1]
     );
 
     const upper = await connectionPool.query(
       `
         select *
-        from efficiency_graph_data
+        from power_graph_data
         where model_id = $1
-        order by abs(CAST(e_flow_ls AS DECIMAL)-$2) + abs( CAST(e_head AS DECIMAL) - $3) asc
-        LIMIT 10
+        order by abs(CAST(p_flow_ls AS DECIMAL)-$2) asc
+        LIMIT 20
         `,
-      [input.model_id, input.flow2, input.head2]
+      [input.model_id, input.flow2]
     );
     return res.status(200).json([...lower.rows, ...upper.rows]);
   }
@@ -198,7 +198,7 @@ app.post("/npshr_data", async (req, res) => {
         from npshr_graph_data
         where model_id = $1
         order by abs(CAST(np_flow_m3hr AS DECIMAL)-$2) asc
-        LIMIT 10
+        LIMIT 20
         `,
       [input.model_id, input.flow2]
     );
